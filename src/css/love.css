@@ -19,6 +19,13 @@ body {
   text-align: center;
 }
 
+@media screen and (min-width: 1000px) {
+  .container {
+    padding-right: 360px;
+    padding-left: 360px;
+  }
+}
+
 header img {
   width: 100%;
   margin-bottom: 18px;
