@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="./src/img/favicon.ico" />
+		<link rel="stylesheet" href="./src/css/layui.css" />
+		<title>Admin</title>
+	</head>
+	<body>
+		<table id="demo" lay-filter="test"></table>
+
+		<script src="./src/layui.js"></script>
+		<script>
+			layui.use('table', function () {
+				var table = layui.table;
+
+				//第一个实例
+				table.render({
+					elem: '#demo',
+					height: 312,
+					url: '/admin/api', //数据接口
+					page: true, //开启分页
+					cols: [
+						[
+							//表头
+							{
+								field: 'Id',
+								title: 'ID',
+								width: 80,
+								sort: true,
+								fixed: 'left',
+							},
+							{ field: 'Name', title: '用户名', width: 80 },
+							{
+								field: 'Contact',
+								title: '联系',
+								width: 80,
+								sort: true,
+							},
+							{
+								field: 'Way',
+								title: '联系方式',
+								width: 80,
+								sort: true,
+							},
+							{
+								field: 'Content',
+								title: '内容',
+								width: 80,
+								sort: true,
+							},
+						],
+					],
+				});
+			});
+		</script>
+	</body>
+</html>
