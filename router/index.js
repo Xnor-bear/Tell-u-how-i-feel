@@ -27,7 +27,7 @@ router.get('/admin/api', async (ctx) => {
 	ctx.body = {
 		code: 0,
 		data: data,
-		mesg: 'ok',
+		msg: 'ok',
 	};
 });
 
@@ -37,10 +37,11 @@ router.post('/submit', koaBody(), (ctx) => {
 	const contact = ctx.request.body.contact;
 	const way = ctx.request.body.way;
 	const content = ctx.request.body.content;
-	const bbqContent = [name, contact, way, content];
+	const time = Date.now();
+	const bbqContent = [name, contact, way, content, time];
 
 	pool.query(
-		'INSERT INTO bbq(Id,Name,Contact,Way,Content) VALUES(0,?,?,?,?)',
+		'INSERT INTO bbq(Id,Name,Contact,Way,Content,Time) VALUES(0,?,?,?,?,?)',
 		bbqContent,
 		function (err, result) {
 			if (err) {
