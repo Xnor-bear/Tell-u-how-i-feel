@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" href="./src/img/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="./src/css/main.css" />
 		<link rel="stylesheet" href="./src/css/layui.css" />
 		<title>Admin</title>
 	</head>
@@ -11,6 +12,13 @@
 		<table id="demo" lay-filter="test"></table>
 
 		<script src="./src/layui.js"></script>
+		<script type="text/html" id="userBar">
+			<div class="layui-btn-container">
+			    <button class="layui-btn layui-btn-sm" lay-event="detail">查看</button>
+			    <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
+			    <button class="layui-btn layui-btn-danger  layui-btn-sm" lay-event="changeStu">删除</button>
+			</div>
+		</script>
 		<script>
 			layui.use('table', function () {
 				var table = layui.table;
@@ -48,7 +56,19 @@
 								field: 'Content',
 								title: '内容',
 								width: 80,
+							},
+							{
+								field: 'Time',
+								title: '时间',
+								width: 80,
 								sort: true,
+							},
+							{
+								field: 'toolBar',
+								title: '操作',
+								align: 'center',
+								width: 200,
+								toolbar: '#userBar',
 							},
 						],
 					],

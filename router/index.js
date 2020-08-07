@@ -37,7 +37,7 @@ router.post('/submit', koaBody(), (ctx) => {
 	const contact = ctx.request.body.contact;
 	const way = ctx.request.body.way;
 	const content = ctx.request.body.content;
-	const time = Date.now();
+	const time = new Date();
 	const bbqContent = [name, contact, way, content, time];
 
 	pool.query(
