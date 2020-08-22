@@ -27,8 +27,18 @@ router.get('/admin/api', async (ctx) => {
 		});
 	});
 
+	let total = await new Promise((resolve, reject) => {
+		pool.query('SELECT SUM(TABLE_ROWS) AS count FROM information_schema.PARTITIONS WHERE TABLE_SCHEMA = SCHEMA () AND TABLE_NAME = "article"', function (err, results) {
+			if (err) {
+				throw err;
+			}
+			resolve(results);
+		});
+	});
+
 	ctx.body = {
 		code: 0,
+		count: total[0].count,
 		data: data,
 		msg: 'ok'
 	};
@@ -76,8 +86,8 @@ router.post('/submit', koaBody(), async (ctx) => {
 		fs.renameSync(files.file.path, newPath); //重命名
 		const name = fields.nickname;
 		const contact = fields.contact;
-		const way = fields.way;
-		const content = fields.content;
+		const way = fields.way || '';
+		const content = fields.content || '';
 		const img = newPath || '';
 		const time = new Date().getTime();
 		const bbqContent = [name, contact, way, content, img, time];
@@ -123,7 +133,7 @@ router.get('/admin', async (ctx) => {
 	ctx.set({
 		'Access-control-Allow-Origin': '*'
 	});
-	return ctx.redirect('admin.html');
+	return ctx.redirect('admin/admin.html');
 });
 
 //删除 api

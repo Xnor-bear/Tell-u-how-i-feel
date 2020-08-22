@@ -58,11 +58,11 @@ header img {
 	padding: 0.55rem 1.5rem;
 	margin-top: 15px;
 	margin-bottom: auto;
-	border-left: 4px solid #96a2ff;
+	border-left: 4px solid #e1bbdb;
 }
 
 .card:hover {
-	border-left-color: #6777ef;
+	border-left-color: #b1a2e8;
 }
 
 .card-header {
@@ -81,22 +81,22 @@ header img {
 .card-header h4 {
 	font-size: 16px;
 	line-height: 30px;
-	color: #6777ef;
+	color: #b1a2e8;
 	margin-bottom: 0;
 	margin-top: 0;
 }
 
 .card-header h4::after {
-	transition: all 0.35s ease-in;
+	transition: all 0.4s ease-in;
 	content: '';
 	position: absolute;
-	background: #6777ef;
+	background: #b1a2e8;
 	width: 4em;
 	height: 5px;
 	top: 70px;
 	left: 1.5rem;
 	border-radius: 6px;
-	box-shadow: 0 2px 6px #acb5f6;
+	box-shadow: 0 2px 6px #e1bbdb;
 }
 
 .card-header h4:hover::after {
@@ -111,7 +111,7 @@ header img {
 	background-color: rgba(241, 241, 241, 0.98);
 	height: 39px;
 	padding: 10px;
-	outline-color: #6777ef;
+	outline-color: #b1a2e8;
 	margin: 10px 0;
 }
 
@@ -148,7 +148,7 @@ header img {
 }
 
 .form-group label {
-	transition: 0.15s ease-in-out;
+	transition: 0.4s ease-in-out;
 	width: 48%;
 	display: inline-block;
 	padding: 6px 10px 6px 16px;
@@ -160,18 +160,18 @@ header img {
 	vertical-align: middle;
 	touch-action: manipulation;
 	cursor: pointer;
-	border: 1px solid #acb5f6;
+	border: 1px solid #e1bbdb;
 	border-radius: 0.6rem;
 	color: #fff;
-	background-color: #6777ef;
-	box-shadow: 0 2px 6px #acb5f6;
+	background-color: #b1a2e8;
+	box-shadow: 0 2px 6px #e1bbdb;
 	position: absolute;
 	top: 2.2em;
 	right: 1.5rem;
 }
 
 label:hover {
-	background-color: #3142c7;
+	background-color: #f48fb1;
 }
 
 .form-group .btn-submit {
@@ -179,8 +179,8 @@ label:hover {
 	text-transform: none;
 	text-align: center;
 	user-select: none;
-	border: 1px solid #acb5f6;
-	transition: 0.15s ease-in-out;
+	border: 1px solid #e1bbdb;
+	transition: 0.4s ease-in-out;
 	color: #fff;
 	border-radius: 0.9rem;
 	display: block;
@@ -188,8 +188,8 @@ label:hover {
 	font-weight: 600;
 	line-height: 24px;
 	letter-spacing: 0.5px;
-	box-shadow: 0 2px 6px #acb5f6;
-	background-color: #6777ef;
+	box-shadow: 0 2px 6px #e1bbdb;
+	background-color: #b1a2e8;
 	padding: 0.55rem 1.5rem;
 	font-size: 16px;
 	cursor: pointer;
@@ -197,7 +197,7 @@ label:hover {
 }
 
 .btn-submit:hover {
-	background-color: #3142c7;
+	background-color: #f48fb1;
 }
 
 footer {

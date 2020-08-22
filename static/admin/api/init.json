@@ -1,0 +1,33 @@
+{
+	"homeInfo": {
+		"title": "首页",
+		"href": "page/table.html"
+	},
+	"logoInfo": {
+		"title": "小可爱表白墙",
+		"image": "images/logo.png",
+		"href": ""
+	},
+	"menuInfo": [
+		{
+			"title": "常规管理",
+			"icon": "fa fa-address-book",
+			"href": "",
+			"target": "_self",
+			"child": [
+				{
+					"title": "表格",
+					"href": "page/table.html",
+					"icon": "fa fa-file-text",
+					"target": "_self"
+				},
+				{
+					"title": "总览",
+					"href": "page/welcome-3.html",
+					"icon": "fa fa-tachometer",
+					"target": "_self"
+				}
+			]
+		}
+	]
+}

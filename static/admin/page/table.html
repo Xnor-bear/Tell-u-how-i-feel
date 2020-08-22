@@ -1,0 +1,253 @@
+<div class="layuimini-container layuimini-page-anim">
+	<div class="layuimini-main">
+		<fieldset class="table-search-fieldset">
+			<legend>搜索信息</legend>
+			<div style="margin: 10px 10px 10px 10px;">
+				<form class="layui-form layui-form-pane" action="">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">ID</label>
+							<div class="layui-input-inline">
+								<input type="text" name="Id" autocomplete="off" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">用户姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="Author" autocomplete="off" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">联系方式</label>
+							<div class="layui-input-inline">
+								<input type="text" name="Contact" autocomplete="off" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+
+		<script type="text/html" id="toolbarDemo">
+			<div class="layui-btn-container">
+			    <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete">删除</button>
+			</div>
+		</script>
+
+		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+		<script type="text/html" id="currentTableBar">
+			<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+		</script>
+	</div>
+</div>
+
+<div id="popUpdateTest" style="display: none;">
+	<form class="layui-form layui-form-pane" lay-filter="formEdit" action="" style="margin-top: 20px;">
+		<div class="layui-form-item">
+			<label class="layui-form-label">昵称</label>
+			<div class="layui-input-block">
+				<input type="text" name="Author" required lay-verify="required" autocomplete="off" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">表白内容</label>
+			<div class="layui-input-block">
+				<input type="text" name="Content" required lay-verify="required" autocomplete="off" class="layui-input" />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系途径</label>
+			<div class="layui-input-block">
+				<select name="Way" lay-filter="Way">
+					<option value="wechat">微信</option>
+					<option value="qq">QQ</option>
+					<option value="phone">手机</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系方式</label>
+			<div class="layui-input-block">
+				<input type="text" name="Contact" required lay-verify="required" autocomplete="off" class="layui-input" />
+			</div>
+		</div>
+
+		<div class="layui-form-item" style="margin-top: 40px;">
+			<div class="layui-input-block">
+				<button class="layui-btn layui-btn-submit" lay-submit lay-filter="editSubmit">
+					确认修改
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	layui.use(['form', 'table', 'miniPage', 'element'], function () {
+		var $ = layui.jquery,
+			form = layui.form,
+			table = layui.table,
+			miniPage = layui.miniPage,
+			util = layui.util;
+
+		table.render({
+			elem: '#currentTableId',
+			url: '/admin/api',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: ['filter', 'exports', 'print'],
+			cols: [
+				[
+					{ type: 'checkbox', width: 50 },
+					{
+						field: 'Id',
+						title: 'ID',
+						width: 80,
+						sort: true
+					},
+					{ field: 'Author', width: 80, title: '用户名' },
+					{
+						field: 'Content',
+						title: '内容',
+						width: 200
+					},
+					{
+						field: 'Time',
+						title: '创建时间',
+						width: 200,
+						templet: function (d) {
+							return util.toDateString(d.Time * 1, 'yyyy年MM月dd日 HH:mm:ss');
+						},
+						sort: true
+					},
+					{ field: 'Way', title: '联系途径', width: 80 },
+					{ field: 'Contact', title: '联系方式', width: 150 },
+					{ title: '操作', minWidth: 150, toolbar: '#currentTableBar' }
+				]
+			],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true,
+			skin: 'line'
+		});
+
+		// 监听搜索操作
+		form.on('submit(data-search-btn)', function (data) {
+			var result = JSON.stringify(data.field);
+			layer.alert(result, {
+				title: '最终的搜索信息'
+			});
+
+			//执行搜索重载
+			table.reload(
+				'currentTableId',
+				{
+					page: {
+						curr: 1
+					},
+					where: {
+						searchParams: result
+					}
+				},
+				'data'
+			);
+
+			return false;
+		});
+
+		/**
+		 * toolbar事件监听
+		 */
+		table.on('toolbar(currentTableFilter)', function (obj) {
+			if (obj.event === 'delete') {
+				// 监听删除操作
+				/* var checkStatus = table.checkStatus('currentTableId'),
+					data = checkStatus.data;
+				layer.alert(JSON.stringify(data)); */
+				layer.alert('功能暂未实现，敬请期待……');
+			}
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj);
+		});
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			if (obj.event === 'edit') {
+				layer.open({
+					//layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+					type: 1,
+					zIndex: -1,
+					title: '修改',
+					content: $('#popUpdateTest') //引用的弹出层的页面层的方式加载修改界面表单
+				});
+
+				form.val('formEdit', {
+					Author: data.Author,
+					Content: data.Content,
+					Way: data.Way,
+					Contact: data.Contact
+				});
+				//动态向表传递赋值可以参看文章进行修改界面的更新前数据的显示，当然也是异步请求的要数据的修改数据的获取
+				form.on('submit(editSubmit)', function (massage) {
+					$.ajax({
+						url: '/edit',
+						type: 'POST',
+						dataType: 'json',
+						data: {
+							editId: dataId,
+							newAuthor: massage.field.Author,
+							newContent: massage.field.Content,
+							newWay: massage.field.Way,
+							newContact: massage.field.Contact
+						},
+						success: function (data) {
+							var returnCode = data.code; //取得返回数据（Sting类型的字符串）的信息进行取值判断
+							if (returnCode == 0) {
+								layer.closeAll('loading');
+								layer.load(2);
+								layer.msg('修改成功', { icon: 6, zIndex: 20010711 });
+								setTimeout(function () {
+									obj.update({
+										Author: massage.field.Author,
+										Content: massage.field.Content,
+										Way: massage.field.Way,
+										Contact: massage.field.Contact
+									}); //修改成功修改表格数据不进行跳转
+									layer.closeAll(); //关闭所有的弹出层
+								}, 1000);
+							} else {
+								layer.msg('修改失败', { icon: 5 });
+							}
+						}
+					});
+					return false;
+				});
+			} else if (obj.event === 'delete') {
+				//删除
+				layer.confirm('确认要删除吗', function (index) {
+					$.ajax({
+						url: '/del/' + obj.data.Id,
+						type: 'GET',
+						success: function (data) {
+							layer.closeAll('loading');
+							layer.load(2);
+							layer.msg('删除成功', { icon: 6, zIndex: 20010711 });
+							obj.del();
+							setTimeout(function () {
+								layer.closeAll(); //关闭所有的弹出层
+							}, 1000);
+						}
+					});
+				});
+			}
+		});
+	});
+</script>
